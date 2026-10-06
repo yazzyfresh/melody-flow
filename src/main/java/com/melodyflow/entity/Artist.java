@@ -1,6 +1,8 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "artists")
@@ -10,12 +12,16 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 100)
     @Column(nullable = false)
     private String name;
 
+    @Size(max = 500)
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Size(max = 100)
     @Column(name = "external_id", unique = true)
     private String externalId;
 

@@ -1,6 +1,10 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,32 +15,40 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 50)
     @Column(nullable = false, unique = true)
     private String username;
 
+    @NotBlank
+    @Email
+    @Size(max = 100)
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank
+    @Size(min = 8, max = 255)
     @Column(nullable = false)
     private String password;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    // Required by JPA
     public User() {
     }
 
-    // Constructor for creating a new user
     public User(String username, String email, String password,
                 String firstName, String lastName) {
-
         this.username = username;
         this.email = email;
         this.password = password;
@@ -44,8 +56,6 @@ public class User {
         this.lastName = lastName;
         this.createdAt = LocalDateTime.now();
     }
-
-    // Getters and Setters
 
     public Long getId() {
         return id;

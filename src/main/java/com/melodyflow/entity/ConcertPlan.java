@@ -1,8 +1,13 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "concert_plans")
@@ -16,8 +21,17 @@ public class ConcertPlan {
     @JoinColumn(name = "saved_concert_id", nullable = false, unique = true)
     private SavedConcert savedConcert;
 
+    @NotNull
+    @DecimalMin(value = "0.00")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal budget;
+
+    @OneToMany(
+            mappedBy = "concertPlan",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Expense> expenses = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -57,6 +71,14 @@ public class ConcertPlan {
 
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
     }
 
     public LocalDateTime getCreatedAt() {
