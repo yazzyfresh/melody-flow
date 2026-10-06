@@ -1,6 +1,10 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,23 +15,29 @@ public class Concert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venue_id", nullable = false)
     private Venue venue;
 
+    @NotBlank
+    @Size(max = 200)
     @Column(nullable = false)
     private String name;
 
+    @NotNull
     @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;
 
+    @Size(max = 500)
     @Column(name = "ticket_url")
     private String ticketUrl;
 
+    @NotBlank
+    @Size(max = 100)
     @Column(name = "external_id", nullable = false, unique = true)
     private String externalId;
 

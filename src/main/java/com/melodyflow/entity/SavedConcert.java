@@ -1,6 +1,9 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +27,8 @@ public class SavedConcert {
     @JoinColumn(name = "concert_id", nullable = false)
     private Concert concert;
 
+    @NotBlank
+    @Size(max = 20)
     @Column(nullable = false)
     private String status;
 

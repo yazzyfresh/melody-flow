@@ -1,6 +1,11 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,11 +22,16 @@ public class Expense {
     @JoinColumn(name = "concert_plan_id", nullable = false)
     private ConcertPlan concertPlan;
 
+    @NotBlank
+    @Size(max = 30)
     @Column(nullable = false)
     private String category;
 
+    @Size(max = 255)
     private String description;
 
+    @NotNull
+    @DecimalMin(value = "0.01")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
@@ -34,8 +44,10 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(ConcertPlan concertPlan, String category,
-                   String description, BigDecimal amount,
+    public Expense(ConcertPlan concertPlan,
+                   String category,
+                   String description,
+                   BigDecimal amount,
                    LocalDate expenseDate) {
         this.concertPlan = concertPlan;
         this.category = category;

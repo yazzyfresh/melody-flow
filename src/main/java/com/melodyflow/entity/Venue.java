@@ -1,6 +1,8 @@
 package com.melodyflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "venues")
@@ -10,16 +12,23 @@ public class Venue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 150)
     @Column(nullable = false)
     private String name;
 
+    @NotBlank
+    @Size(max = 100)
     @Column(nullable = false)
     private String city;
 
+    @Size(max = 50)
     private String state;
 
+    @Size(max = 255)
     private String address;
 
+    @Size(max = 100)
     @Column(name = "external_id", unique = true)
     private String externalId;
 
